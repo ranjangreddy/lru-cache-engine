@@ -22,6 +22,24 @@ time. That's what **LRU (Least Recently Used)** means.
 - **Stats:** see your hit rate, misses and evictions.
 - **Striped mode:** splits the cache into sections so threads wait on each other less.
 
+## Try it
+
+Run the demo to watch the cache work step by step (see `Demo.java`):
+
+```bash
+mvn -q compile
+java -cp target/classes io.github.ranjangreddy.lru.Demo
+```
+
+```
+Added A, B, C         -> order (newest first): [C, B, A]
+Used A                -> A moves to the front: [A, C, B]
+Added D (cache full!) -> B was oldest, so B is removed: [D, A, C]
+...
+Request 1: User#7  took 519 ms
+Request 2: User#7  took 0 ms      <- came from the cache
+```
+
 ## Quick example
 
 ```java
@@ -87,6 +105,7 @@ The 30 tests cover eviction order, expiry, loading, removal alerts, and 16 threa
 
 | File | What it does |
 |---|---|
+| `Demo.java` | **Start here.** Runnable examples with a `main` method |
 | `LruCache.java` | The main cache: hash map + linked list |
 | `StripedLruCache.java` | Splits the cache into sections for more parallel access |
 | `CacheBuilder.java` | Sets up a cache with the options you want |
